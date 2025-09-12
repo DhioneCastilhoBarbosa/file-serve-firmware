@@ -1,9 +1,12 @@
 services:
   firmware-nginx:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
+    image: firmware-nginx:latest
+    build: .
     volumes:
       - ./firmware:/usr/share/nginx/html/firmware:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.fw.rule=Host(`fileserver-fileserver-btbp0v-0288fc-54-159-164-244.traefik.me`)
+      - traefik.http.routers.fw.entrypoints=websecure
+      - traefik.http.routers.fw.tls=true
+      - traefik.http.services.fw.loadbalancer.server.port=80
