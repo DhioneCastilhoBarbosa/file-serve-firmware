@@ -1,6 +1,6 @@
-FROM nginx:alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY firmware/ /usr/share/nginx/html/firmware/
-EXPOSE 8080
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-  CMD wget -qO- http://127.0.0.1:8080/firmware/ >/dev/null 2>&1 || exit 1
+docker rm -f firmware-nginx || true
+docker run -d --name firmware-nginx \
+  -p 8080:8080 \
+  -v "$PWD/nginx.conf:/etc/nginx/conf.d/default.conf:ro" \
+  -v "$PWD/firmware:/usr/share/nginx/html/firmware:ro" \
+  nginx:alpine
