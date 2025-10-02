@@ -9,4 +9,4 @@ services:
       - traefik.http.routers.fw.rule=Host(`fileserver-fileserver-btbp0v-0288fc-54-159-164-244.traefik.me`)
       - traefik.http.routers.fw.entrypoints=websecure
       - traefik.http.routers.fw.tls=true
-      - traefik.http.services.fw.loadbalancer.server.port=8080
+      - traefik.http.services.fw.loadbalancer.server.port=80
